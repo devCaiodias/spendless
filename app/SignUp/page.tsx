@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { DollarSign } from "lucide-react"
-import { LoginForm } from "@/components/auth/login-form"
-export default function LoginPage() {
+import { CreateAccountForm } from "@/components/auth/create-account-form"
+export default function CreateAccountPage() {
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
         <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -15,13 +15,13 @@ export default function LoginPage() {
             </div>
             <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-xs">
-                <LoginForm />
+                <CreateAccountForm />
             </div>
             </div>
         </div>
         <div className="relative hidden bg-muted lg:block">
             <img
-            src="https://i.pinimg.com/1200x/7b/a1/3f/7ba13fc353a43864af6592c79bcb3a2b.jpg"
+            src="https://i.pinimg.com/1200x/a2/cb/39/a2cb39b6752c606f00d7c07cc588d0bd.jpg"
             alt="Image"
             className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
