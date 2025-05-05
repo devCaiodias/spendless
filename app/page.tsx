@@ -1,7 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
+import {createServerComponentClient} from "@supabase/auth-helpers-nextjs"
 import { DollarSign } from "lucide-react"
 import { LoginForm } from "@/components/auth/login-form"
-export default function LoginPage() {
+import { RedirectType, redirect } from "next/navigation"
+import { cookies } from "next/headers"
+export default async function LoginPage() {
+    let login = false 
+    
+    try {
+        const supabase = createServerComponentClient({cookies})
+        const {data: {session}} = await supabase.auth.getSession()
+
+        if(session) {
+            login = true
+        }
+        
+    } catch (error) {
+        console.log("Erro no login da conta", error)
+    }finally {
+        // Se tiver logado vai ser direcionado para pagina user-app
+        if(login) {
+            redirect("/user-app", RedirectType.replace)
+        }
+    }
+    
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
         <div className="flex flex-col gap-4 p-6 md:p-10">
