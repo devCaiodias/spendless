@@ -71,39 +71,39 @@ export function CreateAccountForm() {
         </div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-6")}>
-                <div className="grid gap-6 m-5">
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({field}) => (
-                            <FormItem className="grid gap-2">
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                                <Input placeholder="m@example.com" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                        )}
-                        />
+                    <div className="grid gap-6 m-5">
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({field}) => (
+                                <FormItem className="grid gap-2">
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="m@example.com" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({field}) => (
-                            <FormItem className="grid gap-2">
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <Input type="password" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                        )}
-                        />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({field}) => (
+                                <FormItem className="grid gap-2">
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input type="password" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                            />
 
-                    <Button type="submit" className="w-full">
-                    Create account
-                    </Button>
-                </div>
+                        <Button type="submit" className="w-full">
+                        Create account
+                        </Button>
+                    </div>
                 </form>
         </Form>
         
