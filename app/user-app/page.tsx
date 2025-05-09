@@ -2,11 +2,9 @@ import Sidebar from "@/components/user-app/user-app-sidebar"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect, RedirectType } from "next/navigation"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Dashbord from "@/components/user-app/user-app-dashbord"
-// import { Table } from "@/components/ui/table"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import AddTransation from "@/components/user-app/use-app-add-transaction"
 
 
 export default async function UserApp() {
@@ -34,27 +32,36 @@ export default async function UserApp() {
                 <Sidebar />
 
             <div className="p-5 w-all border border-black mx-20">
-                <h2 className="font-bold mb-4">Add Transaction</h2>
-                <div className="flex flex-col md:flex-row  items-center justify-between gap-4">
-                    <Input className="w-[250px]"  placeholder="Description" />
-                    <Input className="w-[200px]" placeholder="Amount" />
-                    <Select>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Food">Food</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <Button>Add</Button>
-                </div>
+                <AddTransation />
             </div>
 
             <Dashbord />
 
-            {/* <Table>
-
-            </Table> */}
+            <div className="p-5 w-all mx-20">
+            <Table>
+                <TableCaption>
+                    Transaction List
+                </TableCaption>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Category</TableHead>
+                        <TableHead>Date</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>Salary</TableCell>
+                        <TableCell>$ 2000.00</TableCell>
+                        <TableCell>income</TableCell>
+                        <TableCell>04/20/2024</TableCell>
+                        <TableCell>E S</TableCell>
+                        
+                    </TableRow>
+                </TableBody>
+            </Table>
+            </div>
         </>
     )
 }

@@ -67,7 +67,7 @@ export function LoginForm() {
                 </p>
             </div>
             <Form  {...form}>
-                <form onClick={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-6")}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-6")}>
 
                     <div className="grid gap-6 m-5">
                         <FormField

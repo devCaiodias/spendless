@@ -14,7 +14,6 @@ const ExpensesChart = dynamic(() => import('../user-app/user-app-expenseschart')
 export default function Dashbord() {
     return (
         <>
-        
         <div className="grid border-none gap-3 m-4 mx-15 grid-cols-1 md:grid-cols-2">
             <Card className="h-[200px]">
                 <CardHeader className="relative">
