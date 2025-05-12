@@ -67,6 +67,24 @@ export default function TableTransaction() {
         }
     }
 
+    const handleSubmitDelete = async (id: number) => {
+        const supabase = createClientComponentClient()
+        const { data: {user}} = await supabase.auth.getUser()
+
+        if(!user) {
+            console.log("Usuario n autenticado")
+            return
+        }
+
+        const {error} = await supabase.from('transactions').delete().eq("id", id)
+
+        if (error) {
+            console.error("Error deleting transaction: ", error.message)
+        }else (
+            fetchTransations()
+        )
+    }
+
     useEffect(() => {
         fetchTransations()
     }, )
@@ -135,8 +153,10 @@ export default function TableTransaction() {
                                             </form>
                                         </DialogContent>
                                         </Dialog>
+                                        <Button variant="ghost" onClick={() => handleSubmitDelete(tx.id)}>
+                                            <CopyX size={15} />
 
-                                    <CopyX size={15} />
+                                        </Button>
                                 </div>
                                 </TableCell>
 
