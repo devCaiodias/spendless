@@ -17,38 +17,39 @@ export default function AddTransation() {
 
 
     const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setSuccess(false)
-    setError('')
+        e.preventDefault()
+        setLoading(true)
+        setSuccess(false)
+        setError('')
 
-    const { description, amount, category, date } = transaction
-    const supabase = createClientComponentClient()
-    const { data: { user } } = await supabase.auth.getUser();
+        const { description, amount, category, date } = transaction
+        
+        const supabase = createClientComponentClient()
+        const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) {
-        setError("Usuário não autenticado");
-        setLoading(false);
-        return;
-    }
-
-    const { error } = await supabase.from('transactions').insert([
-        {
-            description,
-            amount: parseFloat(amount),
-            category,
-            date,
-            user_id: user.id
+        if (!user) {
+            setError("Usuário não autenticado");
+            setLoading(false);
+            return;
         }
-    ]);
 
-    if (error) {
-        console.error("Error to insert: ", error.message)
-        setError("Erro ao salvar a transação: " + error.message)
-    } else {
-        setSuccess(true)
-        setTransaction({ description: '', amount: '', category: '', date: '' })
-    }
+        const { error } = await supabase.from('transactions').insert([
+            {
+                description,
+                amount: parseFloat(amount),
+                category,
+                date,
+                user_id: user.id
+            }
+        ]);
+
+        if (error) {
+            console.error("Error to insert: ", error.message)
+            setError("Erro ao salvar a transação: " + error.message)
+        } else {
+            setSuccess(true)
+            setTransaction({ description: '', amount: '', category: '', date: '' })
+        }
 
     setLoading(false)
 }

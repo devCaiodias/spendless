@@ -3,8 +3,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect, RedirectType } from "next/navigation"
 import Dashbord from "@/components/user-app/user-app-dashbord"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import AddTransation from "@/components/user-app/use-app-add-transaction"
+import TableTransaction from "@/components/user-app/use-app-table-transaction"
 
 
 export default async function UserApp() {
@@ -38,29 +38,7 @@ export default async function UserApp() {
             <Dashbord />
 
             <div className="p-5 w-all mx-20">
-            <Table>
-                <TableCaption>
-                    Transaction List
-                </TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Description</TableHead>
-                        <TableHead>Amount</TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>Date</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableCell>Salary</TableCell>
-                        <TableCell>$ 2000.00</TableCell>
-                        <TableCell>income</TableCell>
-                        <TableCell>04/20/2024</TableCell>
-                        <TableCell>E S</TableCell>
-                        
-                    </TableRow>
-                </TableBody>
-            </Table>
+                <TableTransaction />
             </div>
         </>
     )
