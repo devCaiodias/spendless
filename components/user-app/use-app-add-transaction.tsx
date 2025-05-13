@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 export default function AddTransation() {
     const [transaction, setTransaction] = useState({
         description: "",
         amount: "",
         category: "",
-        date: ""    
+        date: "",
+        type: ""
     })
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -22,7 +24,7 @@ export default function AddTransation() {
         setSuccess(false)
         setError('')
 
-        const { description, amount, category, date } = transaction
+        const { description, amount, category, date, type } = transaction
         
         const supabase = createClientComponentClient()
         const { data: { user } } = await supabase.auth.getUser();
@@ -39,6 +41,7 @@ export default function AddTransation() {
                 amount: parseFloat(amount),
                 category,
                 date,
+                type,
                 user_id: user.id
             }
         ]);
@@ -48,7 +51,7 @@ export default function AddTransation() {
             setError("Erro ao salvar a transação: " + error.message)
         } else {
             setSuccess(true)
-            setTransaction({ description: '', amount: '', category: '', date: '' })
+            setTransaction({ description: '', amount: '', category: '', date: '', type: `` })
         }
 
     setLoading(false)
@@ -66,6 +69,19 @@ export default function AddTransation() {
                 <Input type="number" value={transaction.amount} onChange={(e) => setTransaction({...transaction, amount: e.target.value})} className="w-[200px]" placeholder="Amount" />
                 <Input type="text" value={transaction.category} onChange={(e) => setTransaction({...transaction, category: e.target.value})} className="w-[200px]" placeholder="Category" />
                 <Input type="date" value={transaction.date} onChange={(e) => setTransaction({...transaction, date: e.target.value})} className="w-[200px]" placeholder="Date" />
+                <Select onValueChange={(value) => setTransaction({ ...transaction, type: value })}>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Selecione o tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                        <SelectItem value="income">Income</SelectItem>
+                        <SelectItem value="expense">Expense</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                    </Select>
+
+
                 <Button type="submit" disabled={loading}> {loading ? 'Saving...' : 'Save your Transaction'}</Button>
             </form>
             {success && <p className="text-green-600">Transação salva com sucesso!</p>}

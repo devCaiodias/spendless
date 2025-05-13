@@ -1,67 +1,86 @@
 'use client'
-import { TrendingUpIcon } from "lucide-react";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Badge } from "../ui/badge";
+import { useEffect, useState } from "react";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { PieChart, Pie, Cell, Legend } from 'recharts'
 
-import dynamic from 'next/dynamic';
-
-// Carrega dinamicamente no client
-const ExpensesChart = dynamic(() => import('../user-app/user-app-expenseschart'), {
-  ssr: false, // Desativa renderização no servidor
-});
-
+type Transaction = {
+    id: number
+    description: string
+    amount: number
+    category: string
+    date: string
+    type: 'income' | 'expense'
+}
 
 export default function Dashbord() {
+    const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [incomeTotal, setIncomeTotal] = useState(0)
+    const [expenseTotal, setExpenseTotal] = useState(0)
+
+    const fetchTransactions = async () => {
+        const supabase = createClientComponentClient()
+        const {data, error} = await supabase.from('transactions').select('*')
+
+        if (!error && data) {
+            setTransactions(data)
+            
+            const income = data.filter((tx: Transaction) => tx.type === 'income').reduce((acc: number, tx: Transaction) => acc + tx.amount, 0)
+            const expense = data.filter((tx: Transaction) => tx.type === 'expense').reduce((acc: number, tx: Transaction) => acc + tx.amount, 0)
+            setIncomeTotal(income)
+            setExpenseTotal(expense)
+        }
+    }
+
+    
+    const totalBalance = incomeTotal - expenseTotal
+    
+    const expensesByCategory = transactions
+    .filter(tx => tx.type === 'expense')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .reduce((acc: any, tx) => {
+        acc[tx.category] = (acc[tx.category] || 0) + tx.amount
+        return acc
+    }, {})
+    
+    const pieData = Object.keys(expensesByCategory).map((key) => ({
+        name: key,
+        value: expensesByCategory[key],
+        }))
+
+    const COLORS = ['#FF6384', '#36A2EB', '#FFCE56', '#FF7F50']
+    
+    useEffect(() => {
+        fetchTransactions()
+    }, [])
+
     return (
         <>
-        <div className="grid border-none gap-3 m-4 mx-15 grid-cols-1 md:grid-cols-2">
+        <div className="grid border-none gap-3 m-4 mx-15 grid-cols-1 md:grid-cols-3">
             <Card className="h-[200px]">
                 <CardHeader className="relative">
                     <CardDescription>Total Revenue</CardDescription>
                     <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                        $1,250.00
+                        ${totalBalance.toFixed(2)}
                     </CardTitle>
-                    <div className="absolute right-4 top-4">
-                        <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
-                        <TrendingUpIcon className="size-3" />
-                        +12.5%
-                        </Badge>
-                    </div>
                 </CardHeader>
-                    <CardFooter className="flex-col items-start gap-1 text-sm">
-                        <div className="line-clamp-1 flex gap-2 font-medium">
-                            Trending up this month <TrendingUpIcon className="size-4" />
-                        </div>
-                        <div className="text-muted-foreground">
-                            Visitors for the last 6 months
-                        </div>
-                    </CardFooter>
             </Card>
             <Card className="h-[200px]">
                 <CardHeader className="relative">
-                    <CardDescription>Total Revenue</CardDescription>
+                    <CardDescription>Total Income</CardDescription>
                     <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                        $1,250.00
+                        ${incomeTotal.toFixed(2)}
                     </CardTitle>
-                    <div className="absolute right-4 top-4">
-                        <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
-                        <TrendingUpIcon className="size-3" />
-                        +12.5%
-                        </Badge>
-                    </div>
                 </CardHeader>
-                    <CardFooter className="flex-col items-start gap-1 text-sm">
-                        <div className="line-clamp-1 flex gap-2 font-medium">
-                            Trending up this month <TrendingUpIcon className="size-4" />
-                        </div>
-                        <div className="text-muted-foreground">
-                            Visitors for the last 6 months
-                        </div>
-                    </CardFooter>
-
             </Card>
-
-            <ExpensesChart />
+            <PieChart width={400} height={220}>
+                <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8">
+                    {pieData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                </Pie>
+                <Legend />
+            </PieChart>
         </div>
         </>
     )
