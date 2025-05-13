@@ -71,7 +71,7 @@ export default function AddTransation() {
                 <Input type="date" value={transaction.date} onChange={(e) => setTransaction({...transaction, date: e.target.value})} className="w-[200px]" placeholder="Date" />
                 <Select onValueChange={(value) => setTransaction({ ...transaction, type: value })}>
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Selecione o tipo" />
+                        <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
@@ -84,7 +84,7 @@ export default function AddTransation() {
 
                 <Button type="submit" disabled={loading}> {loading ? 'Saving...' : 'Save your Transaction'}</Button>
             </form>
-            {success && <p className="text-green-600">Transação salva com sucesso!</p>}
+            {success && <p className="text-green-600">Transaction saved successfully!</p>}
             {error && <p className="text-red-600">{error}</p>}
         </>
     )

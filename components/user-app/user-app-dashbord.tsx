@@ -55,33 +55,33 @@ export default function Dashbord() {
     }, [])
 
     return (
-        <>
-        <div className="grid border-none gap-3 m-4 mx-15 grid-cols-1 md:grid-cols-3">
-            <Card className="h-[200px]">
-                <CardHeader className="relative">
-                    <CardDescription>Total Revenue</CardDescription>
-                    <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                        ${totalBalance.toFixed(2)}
-                    </CardTitle>
-                </CardHeader>
-            </Card>
-            <Card className="h-[200px]">
-                <CardHeader className="relative">
-                    <CardDescription>Total Income</CardDescription>
-                    <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                        ${incomeTotal.toFixed(2)}
-                    </CardTitle>
-                </CardHeader>
-            </Card>
-            <PieChart width={400} height={220}>
-                <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8">
-                    {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                </Pie>
-                <Legend />
-            </PieChart>
+        <div className="flex items-center justify-center">
+            <div className="grid border-none gap-3 my-6 mx-4 items-center justify-center grid-cols-1 md:grid-cols-3">
+                <Card>
+                    <CardHeader className="relative">
+                        <CardDescription>Total Revenue</CardDescription>
+                        <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                            ${totalBalance.toFixed(2)}
+                        </CardTitle>
+                    </CardHeader>
+                </Card>
+                <Card>
+                    <CardHeader className="relative">
+                        <CardDescription>Total Income</CardDescription>
+                        <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                            ${incomeTotal.toFixed(2)}
+                        </CardTitle>
+                    </CardHeader>
+                </Card>
+                <PieChart width={350} height={200}>
+                    <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8">
+                        {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Legend />
+                </PieChart>
+            </div>
         </div>
-        </>
     )
 }
