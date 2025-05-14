@@ -31,7 +31,7 @@ export default async function UserApp() {
         <>
                 <Sidebar />
 
-            <div className="p-5 w-all border border-gray-400 mx-20 rounded-2xl">
+            <div className="p-5 w-all border border-gray-400 mx-12 rounded-2xl">
                 <AddTransation />
             </div>
 
