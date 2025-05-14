@@ -3,6 +3,7 @@
 import { useState } from "react"
 import AddTransation from "./use-app-add-transaction"
 import Dashbord from "./user-app-dashbord"
+import TableTransaction from "./use-app-table-transaction"
 
 export default function TransactionPage() {
     const [refresh, setRefresh] = useState(false)
@@ -18,6 +19,10 @@ export default function TransactionPage() {
             </div>
 
             <Dashbord refresh={refresh} />
+
+            <div className="p-5 w-all mx-20">
+                <TableTransaction onTransactionSaved={triggerRefresh} refresh={refresh} />
+            </div>
         </>
     )
 }

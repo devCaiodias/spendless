@@ -24,8 +24,13 @@ type Transaction = {
     user_id?: string
 }
 
+type Props = {
+    onTransactionSaved: () => void
+    refresh: boolean
+}
 
-export default function TableTransaction() {
+
+export default function TableTransaction({ onTransactionSaved, refresh }: Props) {
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [editingTransactions, setEditingTrasactions] = useState<Transaction | null>(null)
 
@@ -64,6 +69,7 @@ export default function TableTransaction() {
         }else {
             setEditingTrasactions(null)
             fetchTransations()
+            onTransactionSaved()
         }
     }
 
@@ -80,14 +86,15 @@ export default function TableTransaction() {
 
         if (error) {
             console.error("Error deleting transaction: ", error.message)
-        }else (
+        }else {
             fetchTransations()
-        )
+            onTransactionSaved()
+        }
     }
 
     useEffect(() => {
         fetchTransations()
-    }, )
+    },[refresh] )
 
     return (
         <Table>
@@ -127,25 +134,25 @@ export default function TableTransaction() {
                                                 <Label htmlFor="name" className="text-right">
                                                 Description
                                                 </Label>
-                                                <Input id="name" value={editingTransactions?.description ?? ""} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, description: e.target.value} : null)} className="col-span-3" />
+                                                <Input id="name" value={editingTransactions?.description} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, description: e.target.value} : null)} className="col-span-3" />
                                             </div>
                                             <div className="grid grid-cols-4 items-center gap-4">
                                                 <Label htmlFor="username" className="text-right">
                                                 Amount
                                                 </Label>
-                                                <Input id="username" value={editingTransactions?.amount ?? ""} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, amount: parseFloat(e.target.value)} : null)} className="col-span-3" />
+                                                <Input type="number" id="username" value={editingTransactions?.amount} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, amount: parseFloat(e.target.value)} : null)} className="col-span-3" />
                                             </div>
                                             <div className="grid grid-cols-4 items-center gap-4">
                                                 <Label htmlFor="username" className="text-right">
                                                 Category
                                                 </Label>
-                                                <Input id="username" value={editingTransactions?.category ?? ""} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, category: e.target.value} : null)} className="col-span-3" />
+                                                <Input id="username" value={editingTransactions?.category} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, category: e.target.value} : null)} className="col-span-3" />
                                             </div>
                                             <div className="grid grid-cols-4 items-center gap-4">
                                                 <Label htmlFor="username" className="text-right">
                                                 Date
                                                 </Label>
-                                                <Input id="username" value={editingTransactions?.date ?? ""} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, date: e.target.value} : null)} className="col-span-3" />
+                                                <Input id="username" value={editingTransactions?.date} onChange={(e) => setEditingTrasactions((prev) => prev ? {...prev, date: e.target.value} : null)} className="col-span-3" />
                                             </div>
                                             <DialogFooter>
                                             <Button type="submit">Save changes</Button>

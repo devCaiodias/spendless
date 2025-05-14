@@ -73,7 +73,7 @@ export default function Dashbord({ refresh }: { refresh: boolean }) {
                         </CardTitle>
                     </CardHeader>
                 </Card>
-                <PieChart width={350} height={200}>
+                <PieChart width={350} height={250}>
                     <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8">
                         {pieData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

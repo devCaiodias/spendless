@@ -32,9 +32,7 @@ export default async function UserApp() {
 
             <TransactionPage />
 
-            <div className="p-5 w-all mx-20">
-                <TableTransaction />
-            </div>
+            
         </>
     )
 }
