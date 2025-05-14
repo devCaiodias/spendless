@@ -2,9 +2,8 @@ import Sidebar from "@/components/user-app/user-app-sidebar"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect, RedirectType } from "next/navigation"
-import Dashbord from "@/components/user-app/user-app-dashbord"
-import AddTransation from "@/components/user-app/use-app-add-transaction"
 import TableTransaction from "@/components/user-app/use-app-table-transaction"
+import TransactionPage from "@/components/user-app/use-transaction-page"
 
 
 export default async function UserApp() {
@@ -31,11 +30,7 @@ export default async function UserApp() {
         <>
                 <Sidebar />
 
-            <div className="p-5 w-all border border-gray-400 mx-12 rounded-2xl">
-                <AddTransation />
-            </div>
-
-            <Dashbord />
+            <TransactionPage />
 
             <div className="p-5 w-all mx-20">
                 <TableTransaction />

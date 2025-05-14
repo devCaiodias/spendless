@@ -5,7 +5,7 @@ import { Input } from "../ui/input";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
-export default function AddTransation() {
+export default function AddTransation({ onTransactionSaved }: { onTransactionSaved: () => void }) {
     const [transaction, setTransaction] = useState({
         description: "",
         amount: "",
@@ -52,9 +52,13 @@ export default function AddTransation() {
         } else {
             setSuccess(true)
             setTransaction({ description: '', amount: '', category: '', date: '', type: `` })
+            onTransactionSaved()
         }
-
-    setLoading(false)
+        
+        setLoading(false)
+        setTimeout(() => {
+            setSuccess(false)
+        }, 3000)
 }
     
 

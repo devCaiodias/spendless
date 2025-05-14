@@ -13,7 +13,7 @@ type Transaction = {
     type: 'income' | 'expense'
 }
 
-export default function Dashbord() {
+export default function Dashbord({ refresh }: { refresh: boolean }) {
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [incomeTotal, setIncomeTotal] = useState(0)
     const [expenseTotal, setExpenseTotal] = useState(0)
@@ -52,7 +52,7 @@ export default function Dashbord() {
     
     useEffect(() => {
         fetchTransactions()
-    }, [])
+    }, [refresh])
 
     return (
         <div className="flex items-center justify-center">
