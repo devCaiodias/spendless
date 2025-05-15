@@ -2,7 +2,6 @@ import Sidebar from "@/components/user-app/user-app-sidebar"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect, RedirectType } from "next/navigation"
-import TableTransaction from "@/components/user-app/use-app-table-transaction"
 import TransactionPage from "@/components/user-app/use-transaction-page"
 
 
