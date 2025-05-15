@@ -16,6 +16,7 @@ export default function AddTransation({ onTransactionSaved }: { onTransactionSav
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState('')
+    const [selectedType, setSelectedType] = useState<string>('');
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -51,14 +52,16 @@ export default function AddTransation({ onTransactionSaved }: { onTransactionSav
             setError("Erro ao salvar a transação: " + error.message)
         } else {
             setSuccess(true)
-            setTransaction({ description: '', amount: '', category: '', date: '', type: `` })
+            setTransaction({ description: '', amount: '', category: '', date: '', type: '' })
+            setSelectedType('')
             onTransactionSaved()
+
+            setLoading(false)
+            setTimeout(() => {
+                setSuccess(false)
+            }, 3000)
         }
-        
-        setLoading(false)
-        setTimeout(() => {
-            setSuccess(false)
-        }, 3000)
+
 }
     
 
@@ -73,7 +76,7 @@ export default function AddTransation({ onTransactionSaved }: { onTransactionSav
                 <Input type="number" value={transaction.amount} onChange={(e) => setTransaction({...transaction, amount: e.target.value})} className="w-[200px]" placeholder="Amount" />
                 <Input type="text" value={transaction.category} onChange={(e) => setTransaction({...transaction, category: e.target.value})} className="w-[200px]" placeholder="Category" />
                 <Input type="date" value={transaction.date} onChange={(e) => setTransaction({...transaction, date: e.target.value})} className="w-[200px]" placeholder="Date" />
-                <Select onValueChange={(value) => setTransaction({ ...transaction, type: value })}>
+                <Select value={selectedType} onValueChange={(value) => {setSelectedType(value); setTransaction({ ...transaction, type: value })}}>
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select type" />
                     </SelectTrigger>
@@ -83,7 +86,7 @@ export default function AddTransation({ onTransactionSaved }: { onTransactionSav
                         <SelectItem value="expense">Expense</SelectItem>
                         </SelectGroup>
                     </SelectContent>
-                    </Select>
+                </Select>
 
 
                 <Button type="submit" disabled={loading}> {loading ? 'Saving...' : 'Save your Transaction'}</Button>
