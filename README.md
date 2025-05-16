@@ -53,14 +53,15 @@ Abra [http://localhost:3000](http://localhost:3000) com o seu navegador e veja o
 🧪 Banco de Dados
 A tabela transactions no Supabase deve ter os seguintes campos:
 
-Campo	        Tipo	               Observação
-id              UUID	                Primary Key
-user_id	        UUID	                Referência ao usuário Supabase
-description	    Text	
-amount	        Decimal	
-category	    Text	
-date	        Date	
-type	        Text	                Deve ser income ou expense
+| Campo       | Tipo   | Observação                          |
+|-------------|--------|-------------------------------------|
+| `id`        | UUID   | Primary Key                         |
+| `user_id`   | UUID   | Referência ao usuário Supabase      |
+| `description` | Text  |                                     |
+| `amount`    | Decimal|                                     |
+| `category`  | Text   |                                     |
+| `date`      | Date   |                                     |
+| `type`      | Text   | Deve ser `income` ou `expense`      |
 
 💡 Certifique-se de criar uma check constraint no campo type:
 
