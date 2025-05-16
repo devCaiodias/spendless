@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💰 SpendLess
 
-## Getting Started
+Controle suas finanças pessoais com facilidade e clareza. O **SpendLess** é um aplicativo web desenvolvido com foco na organização financeira, permitindo que você registre, visualize e analise suas receitas e despesas de forma intuitiva.
 
-First, run the development server:
+## 🚀 Demonstração
+
+<img src="https://i.pinimg.com/1200x/8a/2a/27/8a2a27547d179514ecc6101645c3f4f4.jpg" height="400px" />
+
+## 🧠 Funcionalidades
+
+- Adição de transações (despesas ou receitas)
+- Seleção de tipo: **Income** (receita) ou **Expense** (despesa)
+- Visualização total de receitas e despesas
+- Gráficos de pizza para análise visual de gastos por categoria
+- Autenticação de usuário com Supabase
+- Feedback visual ao salvar transações
+
+## 🛠️ Tecnologias Utilizadas
+
+- [Next.js](https://nextjs.org/) – framework React moderno
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) + [ShadCN UI](https://ui.shadcn.com/)
+- [Supabase](https://supabase.com/) – autenticação e banco de dados
+
+## 📦 Instalação Local
+
+1. Clone o repositório:
+
 
 ```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/spendless.git
+cd spendless
+
+# Instale as dependências
+npm install
+
+# Configure as variáveis de ambiente
+cp .env.example .env.local
+
+# Insira as chaves do Supabase no arquivo .env.local
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+
+# Rode o projeto
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Abra [http://localhost:3000](http://localhost:3000) com o seu navegador e veja o resultado.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🧪 Banco de Dados
+A tabela transactions no Supabase deve ter os seguintes campos:
 
-## Learn More
+Campo	        Tipo	               Observação
+id              UUID	                Primary Key
+user_id	        UUID	                Referência ao usuário Supabase
+description	    Text	
+amount	        Decimal	
+category	    Text	
+date	        Date	
+type	        Text	                Deve ser income ou expense
 
-To learn more about Next.js, take a look at the following resources:
+💡 Certifique-se de criar uma check constraint no campo type:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sql
+ALTER TABLE transactions
+ADD CONSTRAINT transactions_type_check CHECK (type IN ('income', 'expense'));
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Observações
 
-## Deploy on Vercel
+ - As transações são salvas por usuário (via Supabase Auth).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ - O projeto usa SSR e revalidação automática com a função onTransactionSaved.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Aprendizados
+
+  -  Durante esse projeto, pude aprofundar meus conhecimentos em:
+
+  -  SSR/CSR no Next.js
+
+  -  Uso de Supabase como backend serverless
+
+  -  Manipulação de estado entre componentes
+
+  -  Boas práticas de UX com feedbacks visuais
